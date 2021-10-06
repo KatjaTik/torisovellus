@@ -24,7 +24,7 @@ var parser = multer({ storage: storage});
 app.set('port', (process.env.PORT || 80));
 
 app.post('/createpost', parser.single('image'), (req, res) => {
-    postsDb.push({ title: req.body.title, 
+    postDb.push({ title: req.body.title, 
                 category: req.body.category,  
                 location: req.body.location, 
                 price: req.body.price,
