@@ -28,7 +28,7 @@ app.post('/createpost', parser.single('image'), (req, res) => {
                 category: req.body.category,  
                 location: req.body.location, 
                 price: req.body.price,
-                picture: req.body.file,
+                picture: req.file,
                 dateOfPost: today })
     res.sendStatus(201);
     res.json(req.file);
