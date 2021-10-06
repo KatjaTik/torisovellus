@@ -28,9 +28,10 @@ app.post('/createpost', parser.single('image'), (req, res) => {
                 category: req.body.category,  
                 location: req.body.location, 
                 price: req.body.price,
+                image: req.files['image'],
                 dateOfPost: today 
                 })
-    console.log(req.file)
+    //console.log(req.file)
     res.json(req.file);
   })
 
