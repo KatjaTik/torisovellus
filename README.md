@@ -1,25 +1,42 @@
   # torisovellus (BCI Graded Exercise)
 
 User registration and login /ok
+
 User should be able to create new items to sell – a posting. Posting should contain the following information
 
 Title / ok
+
 Description / ok
+
 Category (clothing, cars etc.) /ok
+
 Location (city, county etc.) /ok
 Images (max 4) /ok
+
 Asking price /ok
+
 Date of posting /ok
+
 Delivery type: /ok
+
   Shipping /ok
+  
   Pickup /ok
+  
 Seller’s name and contact information /ok
+
 User should be able to modify his postings /not implemented
+
 User should be able to delete his posting /user can delete any post
+
 All users (logged and non-logged) should be able to search and list postings based on /ok, but works only with post id
+
   Category /not implemented
+  
   Location /not implemented
+  
   Date of posting /not implemented
+  
 
 Other Requirements
 
