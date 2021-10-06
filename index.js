@@ -24,14 +24,14 @@ var parser = multer({ storage: storage});
 app.set('port', (process.env.PORT || 80));
 
 app.post('/createpost', parser.single('image'), (req, res) => {
+    picture = console.log(req.file)
     postDb.push({ title: req.body.title, 
                 category: req.body.category,  
                 location: req.body.location, 
                 price: req.body.price,
-                image: req.files['image'],
+                picture: picture,
                 dateOfPost: today 
                 })
-    //console.log(req.file)
     res.json(req.file);
   })
 
