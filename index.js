@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 app.post('/posts/create', passport.authenticate('jwt', {session: false}), parser.single('image'), (req, res) => {
     picture = console.log(req.file)
     postDb.push({ title: req.body.title, 
-                id: uuid.v4(), 
+                id: uuidv4(), 
                 category: req.body.category,  
                 location: req.body.location, 
                 price: req.body.price,
