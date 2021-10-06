@@ -31,7 +31,6 @@ app.post('/createpost', parser.single('image'), (req, res) => {
                 dateOfPost: today 
                 })
     console.log(req.file)
-    res.sendStatus(201);
     res.json(req.file);
   })
 
