@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 var cloudinary = require('cloudinary');
 var cloudinaryStorage = require('multer-storage-cloudinary');
 var multer = require('multer');
+const upload = multer({dest: '/uploads'})
 let today = new Date().toISOString().slice(0, 10)
 let userDb = [];
 let postDb = [];
@@ -23,7 +24,7 @@ var parser = multer({ storage: storage});
 
 app.set('port', (process.env.PORT || 80));
 
-app.post('/createpost', parser.fields([]), parser.single('image'), (req, res) => {
+app.post('/createpost', upload.fields([]), parser.single('image'), (req, res) => {
     postsDb.push({ title: req.body.title, 
                 category: req.body.category,  
                 location: req.body.location, 
