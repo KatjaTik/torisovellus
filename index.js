@@ -98,7 +98,7 @@ app.delete('/posts/:id', passport.authenticate('jwt', {session: false}), (req, r
     
         const modify = postDb.findIndex(p = p.id === req.params.id);
         
-        res.send('Successfully modified post!');
+        res.send('Succes modified post!');
     }
 }) 
 
