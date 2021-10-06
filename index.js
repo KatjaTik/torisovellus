@@ -71,7 +71,6 @@ app.post('/posts/create', passport.authenticate('jwt', {session: false}), parser
                 dateOfPost: today 
                 })
     res.json(req.file);
-    res.send('Created post successfully');
   })
 
 app.get('/posts/:id', (req, res) => {
