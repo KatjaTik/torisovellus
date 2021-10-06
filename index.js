@@ -13,6 +13,8 @@ let today = new Date().toISOString().slice(0, 10)
 let userDb = [];
 let postDb = [];
 
+
+
 var storage =  cloudinaryStorage({
     cloudinary: cloudinary,
     folder: '',
@@ -22,18 +24,6 @@ var storage =  cloudinaryStorage({
 var parser = multer({ storage: storage});
 
 app.set('port', (process.env.PORT || 80));
-
-app.post('/createpost', parser.single('image'), (req, res) => {
-    picture = console.log(req.file)
-    postDb.push({ title: req.body.title, 
-                category: req.body.category,  
-                location: req.body.location, 
-                price: req.body.price,
-                picture: req.file['url'],
-                dateOfPost: today 
-                })
-    res.json(req.file);
-  })
 
 passport.use(new BasicStrategy(
     (username, password, done) => {
@@ -70,12 +60,48 @@ app.get('/', (req, res) => {
  //   res.send('Successfully accessed protected resource!');
 //})
 
-app.get('/deletepost', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/posts/create', passport.authenticate('jwt', {session: false}), parser.single('image'), (req, res) => {
+    picture = console.log(req.file)
+    postDb.push({ title: req.body.title, 
+                id: uuid.v4(), 
+                category: req.body.category,  
+                location: req.body.location, 
+                price: req.body.price,
+                picture: req.file['url'],
+                dateOfPost: today 
+                })
+    res.json(req.file);
+    res.send('Created post successfully');
+  })
+
+app.get('/posts/:id', (req, res) => {
     const post = postDb.find(p => p.id === req.params.id);
     if(post === undefined) {
         res.sendStatus(404);
     }else{
         res.json(post);
+    }
+}) 
+
+app.delete('/posts/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const post = postDb.find(p => p.id === req.params.id);
+    if(post === undefined) {
+        res.sendStatus(404);
+    }else{
+        postDb.splice(post);
+        res.send('Removed post successfully');
+    }
+})
+
+/*app.put('/posts/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const post = postDb.find(p => p.id === req.params.id);
+    if(post === undefined) {
+        res.sendStatus(404);
+    }else{
+    
+        const modify = postDb.findIndex(p = p.id === req.params.id);
+        
+        res.send('Successfully modified post!');
     }
 }) 
 
@@ -144,5 +170,5 @@ res.json({ token: token })
 //})
 
 app.listen(app.get('port'), () => {
-  console.log(`Example app listening at`, app.get('port'));
-})
+    console.log(`Example app listening at`, app.get('port'));
+  })
