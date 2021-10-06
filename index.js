@@ -52,23 +52,21 @@ app.get('/', (req, res) => {
   res.send('Tervetuloa Tori.fi:n halpaan kopioon')
 })
 
-//app.get('/protectedResource', passport.authenticate('basic', {session: false}), (req, res) => {
-    
-
-    //this api resource is now protected with http basic
-    
- //   res.send('Successfully accessed protected resource!');
-//})
-
 app.post('/posts/create', passport.authenticate('jwt', {session: false}), parser.single('image'), (req, res) => {
     picture = console.log(req.file)
-    postDb.push({ title: req.body.title, 
-                id: uuidv4(), 
+    postDb.push({		 
+                id: uuidv4(),
+		title: req.body.title, 
                 category: req.body.category,  
+		description: req.body.description,
                 location: req.body.location, 
                 price: req.body.price,
                 picture: req.file['url'],
-                dateOfPost: today 
+                dateOfPost: today,
+		deliverytype: req.body.deliverytype,
+		sellername: req.body.sellername,
+		sellerphone: req.body.sellerphone,
+		selleraddress: req.body.selleraddress,
                 })
     res.json(req.file);
   })
@@ -104,15 +102,6 @@ app.delete('/posts/:id', passport.authenticate('jwt', {session: false}), (req, r
     }
 }) 
 
-
-/*This route will recieve data structure:
-    {
-     "username": "foo",
-     "password": "bar",
-     "email": "foo@bar.com",
-    
-    }
-*/
 app.get('/posts', (req, res) => {
     console.log('Printing all posts..');
     res.send(postDb);
@@ -163,10 +152,6 @@ const token = jwt.sign({foo: "bar"}, secrets.jwtSignKey);
 //send the JWT to the client
 res.json({ token: token })
 })
-
-//app.get('/jwtProtectedResource', passport.authenticate('jwt', {session: false}), (req, res) => {
-//    res.send("You successfully accessed JWT protected API resource");
-//})
 
 app.listen(app.get('port'), () => {
     console.log(`Example app listening at`, app.get('port'));
